@@ -1,0 +1,4 @@
+**Not intended to be done in any particular order**
+1. Implement static typing for the interpreter
+2. Implement `else-if` syntax
+3. Implement an LSP for the language
