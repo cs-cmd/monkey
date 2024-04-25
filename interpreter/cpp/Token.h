@@ -7,4 +7,4 @@ struct Token
 {
     std::string literal;
     std::string type;
-}
+};
