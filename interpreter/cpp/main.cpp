@@ -1,13 +1,19 @@
-#include "Token.h"
 #include <iostream>
-
+#include "lexer/Lexer.h"
 int main() 
 {
-    Token t = 
-    {
-        .literal = "Hello",
-        .type = "Hello!",
-    };
+    // Token t = 
+    // {
+    //     .literal = "Hello",
+    //     .type = "Hello!",
+    // };
+    //
+    // std::cout << t.literal << " " << t.type << std::endl;
 
-    std::cout << t.literal << " " << t.type << std::endl;
+    // make an array of structures.
+    // Use the constants defined as the type, and the icon as the literal 
+
+    Lexer l("hello");
+
+    l.debugPrintInput();
 }
