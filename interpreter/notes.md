@@ -22,6 +22,7 @@
     - the evaluator
 
 # Chapter 1 - Lexing
+## Lexical Analysis
 - Source codes needs to be turned into something 'more accessible'
 - Source code will be transformed twice before being evaluated:
     - First into 'tokens'
@@ -46,4 +47,18 @@
       parsing or even later)
     - Whitespace will not be interpreted as a token in this implemetation of
       the 'Monkey' language specification
+
+## Defining Tokens
+- First example:
+    let five = 5;
+    let ten = 10;
+
+    let add = fn(x, y) {
+        return x + y;
+    }
+
+    let result = add(five, ten);
+
+  - Tokens: LET, IDENTIFIER(_), EQUAL_SIGN, INTEGER(_), SEMICOLON, FN(ARGS...),
+            R_/L_PAREN, R_/L_CURLY_BRACE, RETURN, PLUS_SIGN, FUNCTION_CALL(_)
 
