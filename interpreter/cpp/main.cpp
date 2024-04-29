@@ -22,5 +22,7 @@ int main()
 
     l.debugPrintInput();
 
-    tokenParsing();
+    testTokenParsing();
+
+    testStatementParsing();
 }

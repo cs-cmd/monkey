@@ -3,6 +3,7 @@
 #include <string>
 
 void raiseError(std::string msg);
-void tokenParsing();
+void testTokenParsing();
+void testStatementParsing();
 
 #endif //TESTS

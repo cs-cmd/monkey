@@ -16,8 +16,8 @@ struct Lexer
         this->readChar();
     }
 
-    Token nextToken() const;
-    void readChar() const;
+    Token nextToken();
+    void readChar();
 
     void debugPrintInput();
 };

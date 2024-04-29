@@ -61,4 +61,25 @@
 
   - Tokens: LET, IDENTIFIER(_), EQUAL_SIGN, INTEGER(_), SEMICOLON, FN(ARGS...),
             R_/L_PAREN, R_/L_CURLY_BRACE, RETURN, PLUS_SIGN, FUNCTION_CALL(_)
+- Tokens are defined as:
+    - the token type (a predefined variable),
+    - the token literal (the actual string value)
 
+## The Lexer
+- The lexer receives a string of input (i.e. the line of source code)
+- `nextToken()` will read the next character of the input string
+- `readChar()` determines the actual character used and moves the cursor 
+  forward
+- There are two pointers: one to the current character, and another to the next
+    - The `next` pointer is used to peek ahead
+- The `ch` value keeps track of the current value. Not all keywords in Monkey
+  are single character, but using the `next` pointer will circumvent any issues
+- This interpreter can be optimized by using bytes or integers as the TokenType
+  datatype. Having to evaluate strings like this can be computationally
+  expensive
+- This current interpreter only supports basic ASCII to keep things simple.
+- `readChar()` is used in the constructor to initialize the positions and 
+  first value of the line
+- The `nextToken()` method determines what the next token will be, then calls 
+  `readChar()` to move the pointer forward
+-

@@ -3,12 +3,12 @@
 #include "Lexer.h"
 #include "Token.h"
 
-void Lexer::readChar() const
+void Lexer::readChar()
 {
     // if the next character index is oob, set to null terminated val (default)
     if (this->readPosition >= this->input.length()) 
     {
-        this->ch = "\n";
+        this->ch = "\0";
     } 
     else 
     {
@@ -20,12 +20,13 @@ void Lexer::readChar() const
     this->readPosition += 1;
 }
 
-Token Lexer::nextToken() const
+Token Lexer::nextToken()
 {
     TokenType tt;
     std::string tl;
 
     // C++ doesn't allow strings in switch statements 
+    // This feels wrong
     if (this->ch == "=") 
     {
         tt = tokens::ASSIGN;
@@ -72,6 +73,8 @@ Token Lexer::nextToken() const
     {
         tl = this->ch;
     }
+
+    this->readChar();
 
     return Token(tt, tl);
 }
