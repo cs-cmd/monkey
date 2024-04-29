@@ -1,5 +1,10 @@
 #include <iostream>
 #include "lexer/Lexer.h"
+#include "tests.h"
+
+
+
+
 int main() 
 {
     // Token t = 
@@ -16,4 +21,6 @@ int main()
     Lexer l("hello");
 
     l.debugPrintInput();
+
+    tokenParsing();
 }
