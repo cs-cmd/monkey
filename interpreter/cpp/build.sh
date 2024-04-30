@@ -9,4 +9,4 @@
 # Project [D]e[b]ugger
 # The `find` command finds all [F]iles that match the regex for a `.cpp`
 # extension
-g++ -g $(find . -type f -iregex ".*\.cpp") -o test
+g++ -g $(find . -type f -iregex ".*\.cpp") -o target/test
