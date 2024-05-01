@@ -4,4 +4,6 @@
 3. Implement an LSP for the language
 4. Helpful error messages (line number, column number, @ <token> [or something]
     - A link to a stack-overflow post relating to something similar
+5. Implement floating-point numbers
+    - Optionally, hex and octal notations, too
 

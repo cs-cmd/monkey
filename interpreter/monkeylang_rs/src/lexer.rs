@@ -31,14 +31,21 @@ impl Lexer {
         self.skip_whitespace();
 
         let token = match self.ch {
-            '=' => Token::new(TokenType::ASSIGN, self.ch.to_string()),
-            ';' => Token::new(TokenType::SEMICOLON, self.ch.to_string()),
-            '(' => Token::new(TokenType::LPAREN, self.ch.to_string()),
-            ')' => Token::new(TokenType::RPAREN, self.ch.to_string()),
-            ',' => Token::new(TokenType::COMMA, self.ch.to_string()),
-            '+' => Token::new(TokenType::PLUS, self.ch.to_string()),
-            '{' => Token::new(TokenType::LBRACE, self.ch.to_string()),
-            '}' => Token::new(TokenType::RBRACE, self.ch.to_string()),
+            '=' => Token::new_with_char(TokenType::ASSIGN, &self.ch),
+            ';' => Token::new_with_char(TokenType::SEMICOLON, &self.ch),
+            '(' => Token::new_with_char(TokenType::LPAREN, &self.ch),
+            ')' => Token::new_with_char(TokenType::RPAREN, &self.ch),
+            ',' => Token::new_with_char(TokenType::COMMA, &self.ch),
+            '+' => Token::new_with_char(TokenType::PLUS, &self.ch),
+            '{' => Token::new_with_char(TokenType::LBRACE, &self.ch),
+            '}' => Token::new_with_char(TokenType::RBRACE, &self.ch),
+            '-' => Token::new_with_char(TokenType::MINUS, &self.ch),
+            '!' => Token::new_with_char(TokenType::BANG, &self.ch),
+            '*' => Token::new_with_char(TokenType::ASTERISK, &self.ch),
+            '/' => Token::new_with_char(TokenType::SLASH, &self.ch),
+            '\\' => Token::new_with_char(TokenType::BSLASH, &self.ch),
+            '<' => Token::new_with_char(TokenType::LTHAN, &self.ch),
+            '>' => Token::new_with_char(TokenType::RTHAN, &self.ch),
             _ => {
                 if Self::is_letter(&self.ch) {
                     let lit = self.read_identifier();

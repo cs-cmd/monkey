@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 #[derive(Debug, PartialEq)]
 pub enum TokenType {
     ILLEGAL,
@@ -10,6 +8,14 @@ pub enum TokenType {
 
     ASSIGN,
     PLUS,
+    MINUS,
+    BANG,
+    ASTERISK,
+    SLASH,
+    BSLASH,
+
+    LTHAN,
+    RTHAN,
 
     COMMA,
     SEMICOLON,
@@ -34,6 +40,13 @@ impl Token {
         return Token {
             token_type: tt,
             literal: tl,
+        };
+    }
+
+    pub fn new_with_char(tt: TokenType, tc: &char) -> Token {
+        return Token {
+            token_type: tt,
+            literal: tc.to_string(),
         };
     }
 

@@ -117,3 +117,6 @@
   between it and the book's code
     - At first, I thought it might be a different in implementations in loops,
       but Go's `for` loop does the exact same thing as Rust's `while` loop.
+
+## Extending the token set and lexer
+
