@@ -82,4 +82,7 @@
   first value of the line
 - The `nextToken()` method determines what the next token will be, then calls 
   `readChar()` to move the pointer forward
--
+- `read_identifier()` read characters until the character is not an alphabetic
+  character
+- a map (string, TokenType) can be used to provide quick access to then TokenType
+  for a given string literal
