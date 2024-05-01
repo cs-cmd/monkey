@@ -30,10 +30,6 @@ impl Lexer {
     pub fn next_token(&mut self) -> Token {
         self.skip_whitespace();
 
-        // When reading identifiers or numbers, the `read_char()` call at the
-        // bottom of this method will skip the next token. Use this boolean
-        // to prevent that forward movement
-        let mut addl_skip = true;
         let token = match self.ch {
             '=' => Token::new(TokenType::ASSIGN, self.ch.to_string()),
             ';' => Token::new(TokenType::SEMICOLON, self.ch.to_string()),
@@ -44,24 +40,20 @@ impl Lexer {
             '{' => Token::new(TokenType::LBRACE, self.ch.to_string()),
             '}' => Token::new(TokenType::RBRACE, self.ch.to_string()),
             _ => {
-                addl_skip = false;
-
                 if Self::is_letter(&self.ch) {
                     let lit = self.read_identifier();
                     let token_type = Token::lookup_ident(&lit);
-                    Token::new(token_type, lit)
+                    return Token::new(token_type, lit);
                 } else if Self::is_number(&self.ch) {
                     let lit = self.read_integer();
-                    Token::new(TokenType::INT, lit)
+                    return Token::new(TokenType::INT, lit);
                 } else {
                     Token::new(TokenType::ILLEGAL, "".to_string())
                 }
             }
         };
 
-        if addl_skip {
-            self.read_char();
-        }
+        self.read_char();
 
         return token;
     }
