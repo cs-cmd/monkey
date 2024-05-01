@@ -46,7 +46,7 @@ impl Token {
     pub fn new_with_char(tt: TokenType, tc: &char) -> Token {
         return Token {
             token_type: tt,
-            literal: tc.to_string(),
+            literal: String::from(*tc),
         };
     }
 

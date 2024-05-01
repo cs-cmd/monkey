@@ -11,6 +11,11 @@ pub struct Lexer<'a> {
     ch: char,
 }
 
+enum StringType {
+    IDENTIFIER,
+    NUMBER,
+}
+
 impl<'a> Lexer<'a> {
     pub fn new(input: &str, line_number: usize) -> Lexer {
         let mut l = Lexer {
@@ -47,11 +52,11 @@ impl<'a> Lexer<'a> {
             '>' => Token::new_with_char(TokenType::RTHAN, &self.ch),
             _ => {
                 if Self::is_letter(&self.ch) {
-                    let lit = self.read_identifier();
+                    let lit = self.read(StringType::IDENTIFIER);
                     let token_type = Token::lookup_ident(&lit);
                     return Token::new(token_type, lit);
                 } else if Self::is_number(&self.ch) {
-                    let lit = self.read_integer();
+                    let lit = self.read(StringType::NUMBER);
                     return Token::new(TokenType::INT, lit);
                 } else {
                     Token::new(TokenType::ILLEGAL, "".to_string())
@@ -66,28 +71,22 @@ impl<'a> Lexer<'a> {
 
     fn read_char(&mut self) -> () {
         self.ch = self.chars.next().unwrap_or('\0');
-
         self.position += 1;
     }
 
-    fn read_identifier(&mut self) -> String {
+    fn read(&mut self, t: StringType) -> String {
         let mut s = String::new();
 
-        while Self::is_letter(&self.ch) {
+        let comp = match t {
+            StringType::IDENTIFIER => Self::is_letter,
+            StringType::NUMBER => Self::is_number,
+        };
+
+        while comp(&self.ch) {
             s.push(self.ch);
             self.read_char();
         }
 
-        return s;
-    }
-
-    fn read_integer(&mut self) -> String {
-        let mut s = String::new();
-
-        while Self::is_number(&self.ch) {
-            s.push(self.ch);
-            self.read_char();
-        }
         return s;
     }
 
@@ -97,7 +96,6 @@ impl<'a> Lexer<'a> {
         }
     }
 
-    // Helpers --
     fn is_letter(c: &char) -> bool {
         return match c {
             'a'..='z' | 'A'..='Z' | '_' => true,
