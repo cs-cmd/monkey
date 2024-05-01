@@ -86,3 +86,34 @@
   character
 - a map (string, TokenType) can be used to provide quick access to then TokenType
   for a given string literal
+
+### Summary
+- The `Token` struct represents the syntactic tokens in any given line of 
+  source code
+- The `Lexer` is responsible for taking this source code and turning it into
+  the aforementioned `Token`s
+- There are several functions used:
+    - `read_char()`: Gets the character in the forward pointer and moves the 
+                     two cursors forward
+    - `next_token()`: Responsible for reading the current character and 
+                      directing the program to create a token based on what
+                      character/identifier/keyword was found
+    - `read_identifier()`: while the character is an approved 'letter', continue
+                           reading chars. When that ends, return a substring
+                           for the literal.
+    - `read_integer()`: Just like `read_identifier()`, just with numbers an an
+                        `is_number()` function
+    - `skip_whitespace()`: Ignores approved whitespace characters
+    - `is_letter()`, 
+      `is_number()`, and 
+      `is_whitespace()`: helper functions that contain a hardcoded list of 
+                         'approved' value that are considered a letter, number,
+                         or whitespace by the interpreter.
+- Issue: When calling `read_identifier()` or `read_integer()`, the call to 
+  `read_char()` at the bottom of the `next_token()` function will cause the
+  following character in the input string to be skipped. I added a `addl_skip`
+  variable as a preventative measure, which solved my issue, but this doesn't
+  feel like a good solution. I need to review my code and find any discrepancies
+  between it and the book's code
+    - At first, I thought it might be a different in implementations in loops,
+      but Go's `for` loop does the exact same thing as Rust's `while` loop.
