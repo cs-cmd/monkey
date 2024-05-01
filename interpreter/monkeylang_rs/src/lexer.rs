@@ -1,24 +1,23 @@
 pub mod token;
 
+use core::str::Chars;
 use token::{Token, TokenType};
 
-pub struct Lexer {
-    input: String,
-    chars: Vec<char>,
+pub struct Lexer<'a> {
+    input: &'a str,
+    chars: Chars<'a>,
     line_number: usize,
     position: i32,
-    read_position: i32,
     ch: char,
 }
 
-impl Lexer {
-    pub fn new(input: String, line_number: usize) -> Lexer {
+impl<'a> Lexer<'a> {
+    pub fn new(input: &str, line_number: usize) -> Lexer {
         let mut l = Lexer {
-            input: input.clone(),
-            chars: input.clone().chars().collect(),
+            input,
+            chars: input.chars(),
             line_number,
-            position: -1,
-            read_position: 0,
+            position: 0,
             ch: '\0',
         };
 
@@ -66,37 +65,30 @@ impl Lexer {
     }
 
     fn read_char(&mut self) -> () {
-        self.ch = match self.chars.get(self.read_position as usize) {
-            Some(ch) => *ch,
-            None => '\0',
-        };
+        self.ch = self.chars.next().unwrap_or('\0');
 
-        self.position = self.read_position;
-        self.read_position += 1;
+        self.position += 1;
     }
 
     fn read_identifier(&mut self) -> String {
-        let start_i = self.position as usize;
+        let mut s = String::new();
 
         while Self::is_letter(&self.ch) {
+            s.push(self.ch);
             self.read_char();
         }
 
-        let str_slice = &self.chars[start_i..self.position as usize];
-
-        return str_slice.into_iter().collect();
+        return s;
     }
 
     fn read_integer(&mut self) -> String {
-        let start_i = self.position as usize;
+        let mut s = String::new();
 
         while Self::is_number(&self.ch) {
+            s.push(self.ch);
             self.read_char();
         }
-
-        let str_slice = &self.chars[start_i..self.position as usize];
-
-        return str_slice.into_iter().collect();
+        return s;
     }
 
     fn skip_whitespace(&mut self) -> () {

@@ -23,7 +23,7 @@ pub mod tests {
             Token::new(TokenType::SEMICOLON, ";".to_string()),
         ];
 
-        let mut test_lexer = Lexer::new(input, 1);
+        let mut test_lexer = Lexer::new(&input, 1);
 
         for (i, test) in tests.iter().enumerate() {
             let t = test_lexer.next_token();
@@ -86,7 +86,7 @@ let result = add(five, ten);"
             Token::new(TokenType::SEMICOLON, ";".to_string()),
         ];
 
-        let mut test_lexer = Lexer::new(input, 1);
+        let mut test_lexer = Lexer::new(&input, 1);
 
         for (i, test) in tests.iter().enumerate() {
             let t = test_lexer.next_token();
@@ -165,7 +165,7 @@ let result = add(five, ten);
             Token::new(TokenType::SEMICOLON, ";".to_string()),
         ];
 
-        let mut test_lexer = Lexer::new(input, 1);
+        let mut test_lexer = Lexer::new(&input, 1);
 
         for (i, test) in tests.iter().enumerate() {
             let t = test_lexer.next_token();
