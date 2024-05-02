@@ -2,6 +2,7 @@
 pub enum TokenType {
     ILLEGAL,
     EOF,
+    EOL,
 
     IDENT,
     INT,
@@ -13,6 +14,9 @@ pub enum TokenType {
     ASTERISK,
     SLASH,
     BSLASH,
+
+    EQUAL,
+    NEQUAL,
 
     LTHAN,
     RTHAN,
@@ -27,6 +31,11 @@ pub enum TokenType {
 
     FUNCTION,
     LET,
+    TRUE,
+    FALSE,
+    IF,
+    ELSE,
+    RETURN,
 }
 
 #[derive(Debug)]
@@ -56,6 +65,11 @@ impl Token {
         return match ident {
             "let" => TokenType::LET,
             "fn" => TokenType::FUNCTION,
+            "true" => TokenType::TRUE,
+            "false" => TokenType::FALSE,
+            "if" => TokenType::IF,
+            "else" => TokenType::ELSE,
+            "return" => TokenType::RETURN,
             _ => TokenType::IDENT,
         };
     }

@@ -1,11 +1,12 @@
-pub mod token;
-
-use core::str::Chars;
+use core::{iter::Peekable, str::Chars};
 use token::{Token, TokenType};
 
+pub mod token;
+
+#[derive(Debug)]
 pub struct Lexer<'a> {
     input: &'a str,
-    chars: Chars<'a>,
+    chars: Peekable<Chars<'a>>,
     line_number: usize,
     position: i32,
     ch: char,
@@ -17,11 +18,11 @@ enum StringType {
 }
 
 impl<'a> Lexer<'a> {
-    pub fn new(input: &str, line_number: usize) -> Lexer {
+    pub fn new(input: &str) -> Lexer {
         let mut l = Lexer {
             input,
-            chars: input.chars(),
-            line_number,
+            chars: input.chars().peekable(),
+            line_number: 1,
             position: 0,
             ch: '\0',
         };
@@ -35,7 +36,18 @@ impl<'a> Lexer<'a> {
         self.skip_whitespace();
 
         let token = match self.ch {
-            '=' => Token::new_with_char(TokenType::ASSIGN, &self.ch),
+            '=' => match self.peek_next() {
+                '=' => {
+                    let ch = self.ch;
+                    self.read_char();
+
+                    let mut s = String::from(ch);
+                    s.push(self.ch);
+
+                    Token::new(TokenType::EQUAL, s)
+                }
+                _ => Token::new_with_char(TokenType::ASSIGN, &self.ch),
+            },
             ';' => Token::new_with_char(TokenType::SEMICOLON, &self.ch),
             '(' => Token::new_with_char(TokenType::LPAREN, &self.ch),
             ')' => Token::new_with_char(TokenType::RPAREN, &self.ch),
@@ -44,12 +56,27 @@ impl<'a> Lexer<'a> {
             '{' => Token::new_with_char(TokenType::LBRACE, &self.ch),
             '}' => Token::new_with_char(TokenType::RBRACE, &self.ch),
             '-' => Token::new_with_char(TokenType::MINUS, &self.ch),
-            '!' => Token::new_with_char(TokenType::BANG, &self.ch),
+            '!' => match self.peek_next() {
+                '=' => {
+                    let ch = self.ch;
+                    self.read_char();
+
+                    let mut s = String::from(ch);
+                    s.push(self.ch);
+
+                    Token::new(TokenType::NEQUAL, s)
+                }
+                _ => Token::new_with_char(TokenType::BANG, &self.ch),
+            },
             '*' => Token::new_with_char(TokenType::ASTERISK, &self.ch),
             '/' => Token::new_with_char(TokenType::SLASH, &self.ch),
             '\\' => Token::new_with_char(TokenType::BSLASH, &self.ch),
             '<' => Token::new_with_char(TokenType::LTHAN, &self.ch),
             '>' => Token::new_with_char(TokenType::RTHAN, &self.ch),
+            '\n' => {
+                self.line_number += 1;
+                Token::new_with_char(TokenType::EOL, &self.ch)
+            }
             _ => {
                 if Self::is_letter(&self.ch) {
                     let lit = self.read(StringType::IDENTIFIER);
@@ -90,6 +117,23 @@ impl<'a> Lexer<'a> {
         return s;
     }
 
+    fn read_operator(&mut self) -> String {
+        let mut s = String::from(self.ch);
+        let peek = *self.peek_next();
+
+        return match peek {
+            '=' => {
+                s.push(peek);
+                s
+            }
+            _ => s,
+        };
+    }
+
+    fn peek_next(&mut self) -> &char {
+        return self.chars.peek().unwrap_or(&'\0');
+    }
+
     fn skip_whitespace(&mut self) -> () {
         while Self::is_whitespace(&self.ch) {
             self.read_char();
@@ -112,8 +156,12 @@ impl<'a> Lexer<'a> {
 
     fn is_whitespace(c: &char) -> bool {
         return match c {
-            ' ' | '\t' | '\n' | '\r' => true,
+            ' ' | '\t' | '\r' => true,
             _ => false,
         };
+    }
+
+    pub fn get_current_line(&self) -> usize {
+        return self.line_number;
     }
 }

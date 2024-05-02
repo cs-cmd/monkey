@@ -119,4 +119,7 @@
       but Go's `for` loop does the exact same thing as Rust's `while` loop.
 
 ## Extending the token set and lexer
-
+- Add '==', '!', '!=', '-', '/', ['\\'], '*', '<', and '>'
+    - I added the backslash of my own volition. Not sure what functionality
+      I'll give it.
+- 
