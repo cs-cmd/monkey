@@ -12,11 +12,6 @@ pub struct Lexer<'a> {
     ch: char,
 }
 
-enum StringType {
-    IDENTIFIER,
-    NUMBER,
-}
-
 impl<'a> Lexer<'a> {
     pub fn new(input: &str) -> Lexer {
         let mut l = Lexer {
