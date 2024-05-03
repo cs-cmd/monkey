@@ -52,6 +52,10 @@ impl Token {
         };
     }
 
+    pub fn new_with_ref(tt: TokenType, tl: &String) -> Token {
+        return Self::new(tt, String::from(tl));
+    }
+
     pub fn new_with_char(tt: TokenType, tc: &char) -> Token {
         return Token {
             token_type: tt,

@@ -79,11 +79,11 @@ impl<'a> Lexer<'a> {
             }
             _ => {
                 if Self::is_letter(&self.ch) {
-                    let lit = self.read(StringType::IDENTIFIER);
+                    let lit = self.read(Self::is_letter);
                     let token_type = Token::lookup_ident(&lit);
                     return Token::new(token_type, lit);
                 } else if Self::is_number(&self.ch) {
-                    let lit = self.read(StringType::NUMBER);
+                    let lit = self.read(Self::is_number);
                     return Token::new(TokenType::INT, lit);
                 } else {
                     Token::new(TokenType::ILLEGAL, "".to_string())
@@ -101,13 +101,8 @@ impl<'a> Lexer<'a> {
         self.position += 1;
     }
 
-    fn read(&mut self, t: StringType) -> String {
+    fn read(&mut self, comp: fn(&char) -> bool) -> String {
         let mut s = String::new();
-
-        let comp = match t {
-            StringType::IDENTIFIER => Self::is_letter,
-            StringType::NUMBER => Self::is_number,
-        };
 
         while comp(&self.ch) {
             s.push(self.ch);
