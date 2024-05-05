@@ -1,6 +1,8 @@
 use core::{iter::Peekable, str::Chars};
 use token::{Token, TokenType};
 
+// TODO: Add documentation to this file
+
 pub mod token;
 
 #[derive(Debug)]
@@ -31,52 +33,30 @@ impl<'a> Lexer<'a> {
         self.skip_whitespace();
 
         let token = match self.ch {
-            '=' => match self.peek_next() {
-                '=' => {
-                    let ch = self.ch;
-                    self.read_char();
-
-                    let mut s = String::from(ch);
-                    s.push(self.ch);
-
-                    Token::new(TokenType::EQUAL, s)
-                }
-                _ => Token::new_with_char(TokenType::ASSIGN, &self.ch),
-            },
-            ';' => Token::new_with_char(TokenType::SEMICOLON, &self.ch),
-            '(' => Token::new_with_char(TokenType::LPAREN, &self.ch),
-            ')' => Token::new_with_char(TokenType::RPAREN, &self.ch),
-            ',' => Token::new_with_char(TokenType::COMMA, &self.ch),
-            '+' => Token::new_with_char(TokenType::PLUS, &self.ch),
-            '{' => Token::new_with_char(TokenType::LBRACE, &self.ch),
-            '}' => Token::new_with_char(TokenType::RBRACE, &self.ch),
-            '-' => Token::new_with_char(TokenType::MINUS, &self.ch),
-            '!' => match self.peek_next() {
-                '=' => {
-                    let ch = self.ch;
-                    self.read_char();
-
-                    let mut s = String::from(ch);
-                    s.push(self.ch);
-
-                    Token::new(TokenType::NEQUAL, s)
-                }
-                _ => Token::new_with_char(TokenType::BANG, &self.ch),
-            },
-            '*' => Token::new_with_char(TokenType::ASTERISK, &self.ch),
-            '/' => Token::new_with_char(TokenType::SLASH, &self.ch),
-            '\\' => Token::new_with_char(TokenType::BSLASH, &self.ch),
-            '<' => Token::new_with_char(TokenType::LTHAN, &self.ch),
-            '>' => Token::new_with_char(TokenType::RTHAN, &self.ch),
+            '=' => self.read_op_multichar(TokenType::ASSIGN),
+            ';' => Token::new_with_char(TokenType::SEMICOLON, self.ch),
+            '(' => Token::new_with_char(TokenType::LPAREN, self.ch),
+            ')' => Token::new_with_char(TokenType::RPAREN, self.ch),
+            ',' => Token::new_with_char(TokenType::COMMA, self.ch),
+            '+' => Token::new_with_char(TokenType::PLUS, self.ch),
+            '{' => Token::new_with_char(TokenType::LBRACE, self.ch),
+            '}' => Token::new_with_char(TokenType::RBRACE, self.ch),
+            '-' => Token::new_with_char(TokenType::MINUS, self.ch),
+            '!' => self.read_op_multichar(TokenType::BANG),
+            '*' => Token::new_with_char(TokenType::ASTERISK, self.ch),
+            '/' => Token::new_with_char(TokenType::SLASH, self.ch),
+            '\\' => Token::new_with_char(TokenType::BSLASH, self.ch),
+            '<' => Token::new_with_char(TokenType::LTHAN, self.ch),
+            '>' => Token::new_with_char(TokenType::RTHAN, self.ch),
             '\n' => {
                 self.position = 0;
                 self.line_number += 1;
-                Token::new_with_char(TokenType::EOL, &self.ch)
+                Token::new_with_char(TokenType::EOL, self.ch)
             }
             _ => {
                 if Self::is_letter(&self.ch) {
                     let lit = self.read(Self::is_letter);
-                    let token_type = Token::lookup_ident(&lit);
+                    let token_type = Token::lookup_keyword(&lit);
                     return Token::new(token_type, lit);
                 } else if Self::is_number(&self.ch) {
                     let lit = self.read(Self::is_number);
@@ -108,17 +88,19 @@ impl<'a> Lexer<'a> {
         return s;
     }
 
-    fn read_operator(&mut self) -> String {
+    // checks next character to see if it is a valid operator
+    fn read_op_multichar(&mut self, default: TokenType) -> Token {
         let mut s = String::from(self.ch);
-        let peek = *self.peek_next();
+        s.push(*self.peek_next());
 
-        return match peek {
-            '=' => {
-                s.push(peek);
-                s
+        match Token::lookup_operator(&s) {
+            Some(t_type) => {
+                let t = Token::new(t_type, s);
+                self.read_char();
+                t
             }
-            _ => s,
-        };
+            _ => Token::new_with_char(default, self.ch),
+        }
     }
 
     fn peek_next(&mut self) -> &char {
