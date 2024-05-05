@@ -69,6 +69,7 @@ impl<'a> Lexer<'a> {
             '<' => Token::new_with_char(TokenType::LTHAN, &self.ch),
             '>' => Token::new_with_char(TokenType::RTHAN, &self.ch),
             '\n' => {
+                self.position = 0;
                 self.line_number += 1;
                 Token::new_with_char(TokenType::EOL, &self.ch)
             }
@@ -151,7 +152,7 @@ impl<'a> Lexer<'a> {
         };
     }
 
-    pub fn get_current_line(&self) -> usize {
-        return self.line_number;
+    pub fn get_current_location(&self) -> String {
+        return format!("Line {}: column: {}", self.line_number, self.position);
     }
 }

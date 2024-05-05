@@ -31,8 +31,8 @@ pub mod tests {
             assert_eq!(
                 t.token_type,
                 test.token_type,
-                "Error on line {}, token types do not match (expected: {:?}, found: {:?}",
-                test_lexer.get_current_line(),
+                "{}, token types do not match (expected: {:?}, found: {:?}",
+                test_lexer.get_current_location(),
                 test.token_type,
                 t.token_type
             );
@@ -40,8 +40,8 @@ pub mod tests {
             assert_eq!(
                 t.literal,
                 test.literal,
-                "Error on line {}, token literals do not match (expected: {:?}, found: {:?}",
-                test_lexer.get_current_line(),
+                "{}, token literals do not match (expected: {:?}, found: {:?}",
+                test_lexer.get_current_location(),
                 test.literal,
                 t.literal
             );
@@ -113,8 +113,8 @@ let result = add(five, ten);"
             assert_eq!(
                 t.token_type,
                 test.token_type,
-                "Error on line {}, token types do not match (expected: {:?}, found: {:?}",
-                test_lexer.get_current_line(),
+                "{}, token types do not match (expected: {:?}, found: {:?}",
+                test_lexer.get_current_location(),
                 test.token_type,
                 t.token_type
             );
@@ -122,8 +122,8 @@ let result = add(five, ten);"
             assert_eq!(
                 t.literal,
                 test.literal,
-                "Error on line {}, token literals do not match (expected: {:?}, found: {:?}",
-                test_lexer.get_current_line(),
+                "{}, token literals do not match (expected: {:?}, found: {:?}",
+                test_lexer.get_current_location(),
                 test.literal,
                 t.literal
             );
@@ -216,8 +216,8 @@ let result = add(five, ten);
             assert_eq!(
                 t.token_type,
                 test.token_type,
-                "Error on line {}, token types do not match (expected: {:?}, found: {:?}",
-                test_lexer.get_current_line(),
+                "{}, token types do not match (expected: {:?}, found: {:?}",
+                test_lexer.get_current_location(),
                 test.token_type,
                 t.token_type
             );
@@ -225,8 +225,8 @@ let result = add(five, ten);
             assert_eq!(
                 t.literal,
                 test.literal,
-                "Error on line {}, token literals do not match (expected: {:?}, found: {:?}",
-                test_lexer.get_current_line(),
+                "{}, token literals do not match (expected: {:?}, found: {:?}",
+                test_lexer.get_current_location(),
                 test.literal,
                 t.literal
             );
@@ -377,8 +377,8 @@ if (10 != 5) { return false; }
             assert_eq!(
                 t.token_type,
                 test.token_type,
-                "Error on line {}, token types do not match (expected: {:?}, found: {:?}",
-                test_lexer.get_current_line(),
+                "{}, token types do not match (expected: {:?}, found: {:?}",
+                test_lexer.get_current_location(),
                 test.token_type,
                 t.token_type
             );
@@ -386,8 +386,8 @@ if (10 != 5) { return false; }
             assert_eq!(
                 t.literal,
                 test.literal,
-                "Error on line {}, token literals do not match (expected: {:?}, found: {:?}",
-                test_lexer.get_current_line(),
+                "{}, token literals do not match (expected: {:?}, found: {:?}",
+                test_lexer.get_current_location(),
                 test.literal,
                 t.literal
             );
