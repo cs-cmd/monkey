@@ -121,5 +121,13 @@
 ## Extending the token set and lexer
 - Add '==', '!', '!=', '-', '/', ['\\'], '*', '<', and '>'
     - I added the backslash of my own volition. Not sure what functionality
-      I'll give it.
-- 
+      I'll give it
+- line and position counting is fairly straight forward to implement
+
+## Start of a REPL
+- [R]ead [E]valuate [P]rint [L]oop
+- Also called `consoles` or `interactive mode`s
+- Read line from input, sends the input read to the interpreter, and then prints
+  any result/output to the terminal/screen, then does it again
+- The tokenization is a part of this loop
+

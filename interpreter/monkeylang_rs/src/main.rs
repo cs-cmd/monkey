@@ -1,3 +1,7 @@
+mod repl;
+
 fn main() {
-    println!("Hello, world!");
+    println!("Welcome to the Monkeylang command line! :)");
+
+    repl::start();
 }

@@ -137,4 +137,8 @@ impl<'a> Lexer<'a> {
     pub fn get_current_location(&self) -> String {
         return format!("Line {}: column: {}", self.line_number, self.position);
     }
+
+    pub fn has_next(&mut self) -> bool {
+        return self.chars.peek() != None;
+    }
 }
