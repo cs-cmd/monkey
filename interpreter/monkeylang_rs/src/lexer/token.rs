@@ -8,7 +8,6 @@
 pub enum TokenType {
     ILLEGAL,
     EOF,
-    EOL,
 
     IDENT,
     INT,

@@ -48,11 +48,6 @@ impl<'a> Lexer<'a> {
             '\\' => Token::new_with_char(TokenType::BSLASH, self.ch),
             '<' => Token::new_with_char(TokenType::LTHAN, self.ch),
             '>' => Token::new_with_char(TokenType::RTHAN, self.ch),
-            '\n' => {
-                self.position = 0;
-                self.line_number += 1;
-                Token::new_with_char(TokenType::EOL, self.ch)
-            }
             _ => {
                 if Self::is_letter(&self.ch) {
                     let lit = self.read(Self::is_letter);
@@ -109,6 +104,11 @@ impl<'a> Lexer<'a> {
 
     fn skip_whitespace(&mut self) -> () {
         while Self::is_whitespace(&self.ch) {
+            if self.ch == '\n' {
+                self.position = 0;
+                self.line_number += 1;
+            }
+
             self.read_char();
         }
     }
@@ -129,7 +129,7 @@ impl<'a> Lexer<'a> {
 
     fn is_whitespace(c: &char) -> bool {
         return match c {
-            ' ' | '\t' | '\r' => true,
+            ' ' | '\t' | '\r' | '\n' => true,
             _ => false,
         };
     }
