@@ -131,3 +131,34 @@
   any result/output to the terminal/screen, then does it again
 - The tokenization is a part of this loop
 
+# Parsing
+## Parsers
+- Parsers take input and turn them into a data structure
+- Parsing also checks for correct syntax/structure of the input data
+- The parsing comes after lexing
+- JSON is another parsed input; JSON and programming languages are, conceptually
+  the same in terms of parsing
+- The output from parsing programming languages is called the `Abstract Syntax
+  Tree`
+    - The `Abstract` part comes from certain characters not being represented
+      in the tree
+- Parser generators are programs that are fed a specification and produce a
+  parser that can be used to parse whatever meets the specification
+## Writing a Parser for the Monkey language
+- Two types of parsing strategies:
+    - Top-down
+        - `Recursive Descent` *
+        - `Early Parsing`
+        - `Predicitve Parsing`
+    - Bottom-up
+- `Recursive Descent` will be used here
+- `Top-down` parsers create the root node first, then build down; `bottom-up` 
+  start with the leaf nodes, then moves up the tree
+- `Recursive Descent` parsing follows a similar building process to normal tree
+  data structures, which is why it is recommended to parsing beginners
+- `let` statements indicate a binding of a value to a name/variable
+    - These statements follow this pattern: `let <identifier> = <expression>;`
+- `Expressions` produce values, while `statements` do not
+    - Rust, for instance, is an `expression-based language` meaning most of the
+      code written can be used as an expression
+
