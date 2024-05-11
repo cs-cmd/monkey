@@ -4,7 +4,7 @@
 //! tokens in the Monkey programming language
 
 /// Represents the type of token
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum TokenType {
     ILLEGAL,
     EOF,
@@ -44,7 +44,7 @@ pub enum TokenType {
 }
 
 /// The actual token type, containing the type and the string literal
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Token {
     pub token_type: TokenType,
     pub literal: String,

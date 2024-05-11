@@ -1,4 +1,4 @@
-use crate::lexer::token::Token;
+use crate::lexer::token::{Token, TokenType};
 // Node types
 pub trait BaseNode {
     fn token_literal(&self) -> Option<&String>;
@@ -26,6 +26,10 @@ impl Program {
     pub fn new() -> Program {
         return Program { statements: vec![] };
     }
+
+    pub fn add_statement(&mut self, st: Box<dyn Statement>) -> () {
+        self.statements.push(st);
+    }
 }
 
 impl BaseNode for Program {
@@ -44,10 +48,10 @@ pub struct Identifier {
 }
 
 impl Identifier {
-    pub fn new(t: Token, v: String) -> Identifier {
+    pub fn new(name: String) -> Identifier {
         return Identifier {
-            token: t,
-            value: String::from(v),
+            token: Token::new_with_ref(TokenType::IDENT, &name),
+            value: name,
         };
     }
 }
@@ -65,10 +69,18 @@ impl BaseNode for Identifier {
 pub struct LetStatement {
     token: Token,
     name: Identifier,
-    value: dyn Expression,
+    value: Box<dyn Expression>,
 }
 
-impl LetStatement {}
+impl LetStatement {
+    pub fn new(t: Token, n: String, v: Box<dyn Expression>) -> LetStatement {
+        return LetStatement {
+            token: t,
+            name: Identifier::new(n),
+            value: v,
+        };
+    }
+}
 
 impl BaseNode for LetStatement {
     fn token_literal(&self) -> Option<&String> {

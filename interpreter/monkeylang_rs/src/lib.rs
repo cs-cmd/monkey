@@ -1,5 +1,6 @@
-pub mod lexer;
 pub mod ast;
+pub mod lexer;
+pub mod parser;
 // use lexer::token::{Token, TokenType};
 
 #[cfg(test)]
