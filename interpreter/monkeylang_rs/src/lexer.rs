@@ -2,6 +2,7 @@ use crate::token::{Token, TokenType};
 use core::{iter::Peekable, str::Chars};
 // TODO: Add documentation to this file
 
+// In hindsight, it was not smart to use references here.
 #[derive(Debug)]
 pub struct Lexer<'a> {
     input: &'a str,

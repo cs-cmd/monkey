@@ -7,14 +7,13 @@ use crate::{
 use std::mem;
 
 pub struct Parser<'a> {
-    lexer: Lexer<'a>,
-
+    lexer: &'a mut Lexer<'a>,
     curr_token: Option<Token>,
     peek_token: Option<Token>,
 }
 
 impl<'a> Parser<'a> {
-    pub fn new(l: Lexer) -> Parser {
+    pub fn new(l: &'a mut Lexer<'a>) -> Parser<'a> {
         let mut p = Parser {
             lexer: l,
             curr_token: None,

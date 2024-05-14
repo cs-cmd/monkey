@@ -2,7 +2,6 @@ pub mod ast;
 pub mod lexer;
 pub mod parser;
 pub mod token;
-// use lexer::token::{Token, TokenType};
 
 #[cfg(test)]
 pub mod tests {

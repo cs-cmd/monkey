@@ -56,7 +56,7 @@ impl Token {
     /// # Example:
     ///
     /// ```
-    /// use monkeylang_rs::lexer::token::{TokenType, Token};
+    /// use monkeylang_rs::token::*;
     /// let tt = TokenType::INT;
     /// let val_str = "15";
     /// let t = Token::new(tt, val_str.to_owned());
@@ -75,7 +75,7 @@ impl Token {
     /// # Example:
     ///
     /// ```
-    /// use monkeylang_rs::lexer::token::{Token, TokenType};
+    /// use monkeylang_rs::token::*;
     /// let tt = TokenType::BANG;
     /// let s_ref = String::from("!");
     /// let t_ref = Token::new_with_ref(tt, &s_ref);
@@ -90,7 +90,7 @@ impl Token {
     /// # Example:
     ///
     /// ```
-    /// use monkeylang_rs::lexer::token::{Token, TokenType};
+    /// use monkeylang_rs::token::*;
     /// let c = '=';
     /// let tt = TokenType::ASSIGN;
     /// let t = Token::new_with_char(tt, c);
@@ -108,7 +108,7 @@ impl Token {
     /// # Example:
     ///
     /// ```
-    /// use monkeylang_rs::lexer::token::{Token, TokenType};
+    /// use monkeylang_rs::token::*;
     /// let s_1 = Token::lookup_keyword("let");
     /// assert_eq!(TokenType::LET, s_1);
     /// let s_2 = Token::lookup_keyword("easdadsf");
@@ -137,7 +137,7 @@ impl Token {
     /// # Example
     ///
     /// ```
-    /// use monkeylang_rs::lexer::token::{Token, TokenType};
+    /// use monkeylang_rs::token::*;
     /// let s_1 = Token::lookup_operator("!=");
     /// assert_eq!(Some(TokenType::NEQUAL), s_1);
     /// let s_2 = Token::lookup_operator("==");
