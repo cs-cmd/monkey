@@ -1,12 +1,10 @@
 use crate::{
     ast,
-    lexer::{
-        self,
-        token::{Token, TokenType},
-        Lexer,
-    },
+    lexer::{self, Lexer},
     parser,
+    token::{Token, TokenType},
 };
+use std::mem;
 
 pub struct Parser<'a> {
     lexer: Lexer<'a>,
@@ -32,7 +30,6 @@ impl<'a> Parser<'a> {
     }
 
     pub fn next_token(&mut self) -> () {
-        self.curr_token = self.peek_token;
-        self.peek_token = Some(self.lexer.next_token());
+        self.curr_token = mem::replace(&mut self.peek_token, Some(self.lexer.next_token()));
     }
 }

@@ -1,4 +1,4 @@
-use crate::lexer::token::{Token, TokenType};
+use crate::token::{Token, TokenType};
 // Node types
 pub trait BaseNode {
     fn token_literal(&self) -> Option<&String>;

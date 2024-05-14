@@ -1,9 +1,6 @@
+use crate::token::{Token, TokenType};
 use core::{iter::Peekable, str::Chars};
-use token::{Token, TokenType};
-
 // TODO: Add documentation to this file
-
-pub mod token;
 
 #[derive(Debug)]
 pub struct Lexer<'a> {

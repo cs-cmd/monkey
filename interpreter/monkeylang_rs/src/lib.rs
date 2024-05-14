@@ -1,14 +1,13 @@
 pub mod ast;
 pub mod lexer;
 pub mod parser;
+pub mod token;
 // use lexer::token::{Token, TokenType};
 
 #[cfg(test)]
 pub mod tests {
-    use crate::lexer::{
-        token::{Token, TokenType},
-        Lexer,
-    };
+    use crate::lexer::Lexer;
+    use crate::token::{Token, TokenType};
 
     #[test]
     fn test_simple_tokens() {
